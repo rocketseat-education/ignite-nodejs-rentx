@@ -1,7 +1,8 @@
-import { getRepository, Repository } from "typeorm";
+import { Repository } from "typeorm";
 
 import { ICreateUserTokenDTO } from "@modules/accounts/dtos/ICreateUserTokenDTO";
 import { IUsersTokensRepository } from "@modules/accounts/repositories/IUsersTokensRepository";
+import dataSource from "@shared/infra/typeorm";
 
 import { UserTokens } from "../entities/UserTokens";
 
@@ -9,7 +10,7 @@ class UsersTokensRepository implements IUsersTokensRepository {
   private repository: Repository<UserTokens>;
 
   constructor() {
-    this.repository = getRepository(UserTokens);
+    this.repository = dataSource.getRepository(UserTokens);
   }
 
   async create({
@@ -32,7 +33,7 @@ class UsersTokensRepository implements IUsersTokensRepository {
     user_id: string,
     refresh_token: string
   ): Promise<UserTokens> {
-    const usersTokens = await this.repository.findOne({
+    const usersTokens = await this.repository.findOneBy({
       user_id,
       refresh_token,
     });
@@ -44,7 +45,7 @@ class UsersTokensRepository implements IUsersTokensRepository {
   }
 
   async findByRefreshToken(refresh_token: string): Promise<UserTokens> {
-    const userToken = await this.repository.findOne({ refresh_token });
+    const userToken = await this.repository.findOneBy({ refresh_token });
 
     return userToken;
   }

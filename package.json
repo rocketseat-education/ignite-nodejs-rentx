@@ -6,9 +6,12 @@
   "scripts": {
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files",
     "dev": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules --respawn src/shared/infra/http/server.ts",
-    "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
+    "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js -d src/shared/infra/typeorm/index.ts",
     "test": "NODE_ENV=test jest --runInBand --detectOpenHandles",
     "seed:admin": "ts-node-dev -r tsconfig-paths/register  src/shared/infra/typeorm/seed/admin.ts"
+  },
+  "engines": {
+    "node": ">=14"
   },
   "dependencies": {
     "@sentry/node": "^6.2.5",
@@ -34,7 +37,7 @@
     "supertest": "^6.1.3",
     "swagger-ui-express": "^4.1.6",
     "tsyringe": "^4.4.0",
-    "typeorm": "^0.2.31",
+    "typeorm": "^0.3.5",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
